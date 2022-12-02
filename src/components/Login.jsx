@@ -4,10 +4,26 @@ import { useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import shareVideo from "../assets/share.mp4";
 import logo from "../assets/logowhite.png";
+import { gapi } from "gapi-script"
+import { useEffect } from "react"
 
 import { client } from '../client'
 
 const Login = () => {
+
+    const clientId =
+        process.env.REACT_APP_GOOGLE_API_TOKEN;
+
+    useEffect(() => {
+        const initClient = () => {
+            gapi.client.init({
+                clientId: clientId,
+                scope: "",
+            });
+        };
+        gapi.load("client:auth2", initClient);
+    });
+
     const navigate = useNavigate();
 
     const responseGoogle = (response) => {
